@@ -3,9 +3,13 @@
   line-height: 1.5;
   font-weight: 400;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #fff;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -65,4 +69,8 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+span {
+  color: #1a1a1a;
 }

@@ -1,9 +1,16 @@
 import "./App.css";
+import "./styles/styles.css";
+import Header from "./components/Header/Header";
+import SearchBar from "./components/SearchBar/SearchBar";
 
 function App() {
   return (
     <>
-      <div>HELLO WORLD</div>
+      <Header />
+      <SearchBar />
+      <div>
+        <span>🚧 UNDER CONSTRUCTION 🚧</span>
+      </div>
     </>
   );
 }
