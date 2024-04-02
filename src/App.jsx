@@ -8,9 +8,6 @@ function App() {
     <>
       <Header />
       <SearchBar />
-      <div>
-        <span>🚧 UNDER CONSTRUCTION 🚧</span>
-      </div>
     </>
   );
 }
