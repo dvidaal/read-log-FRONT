@@ -1,38 +1,11 @@
-import { useEffect, useState } from "react";
-import { useBook } from "../../hooks/useBook/useBook";
 
-const BooksList = () => {
-  const { getBook } = useBook();
-  const [bookData, setBookData] = useState(null);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getBook();
-        if (response) {
-          setBookData(response);
-        }
-      } catch (error) {
-        console.error("Error al obtener los datos del libro:", error);
-        setError("Error al obtener los datos del libro");
-      }
-    };
-
-    fetchData();
-
-    return () => {
-      setBookData(null);
-      setError(null);
-    };
-  }, [getBook]);
+const BooksList = ({ booksFiltered }) => {
 
   return (
     <div>
-      {error && <p className="text-black">{error}</p>}
-      {bookData && (
+      {booksFiltered && (
         <div className="grid grid-cols-2 gap-4">
-          {bookData.map((book, index) => (
+          {booksFiltered.map((book, index) => (
             <div key={index} className="text-black border border-gray-300 p-4">
               <p className="font-bold">{book.Nº}</p>
               <p className="font-bold">Título:</p>
@@ -54,3 +27,4 @@ const BooksList = () => {
 };
 
 export default BooksList;
+
