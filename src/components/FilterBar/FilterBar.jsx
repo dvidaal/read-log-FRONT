@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useBook } from "../../hooks/useBook/useBook";
+import BooksList from "../BooksList/BooksList";
 
 const FilterBar = () => {
   const { getBook } = useBook();
   const [bookData, setBookData] = useState(null);
   const [selectValue, setSelectValue] = useState("");
   const [filteredBooks, setFilteredBooks] = useState([]);
+  const [booksFiltered, setBooksFiltered] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -13,33 +15,31 @@ const FilterBar = () => {
         const response = await getBook();
         if (response) {
           setBookData(response);
-          // Filtrar los años únicos de los libros
           const uniqueYears = [...new Set(response.map((book) => book.Año))];
           setFilteredBooks(uniqueYears);
         }
       } catch (error) {
         console.error("Error fetching book data:", error);
+        setError("Error fetching book data");
       }
     };
-
     fetchData();
-
     return () => {
       setBookData(null);
     };
   }, [getBook]);
 
+
   const handleSelectChange = (event) => {
     const selectedYear = event.target.value;
-    console.log("AÑO SELECCIONADO ", selectedYear);
+    const selectedYearNumber = parseInt(selectedYear);
     setSelectValue(selectedYear);
-    const booksForYear = bookData.filter((book) => book.Año === selectedYear);
-    console.log("BOOKS FILTRADOS ", booksForYear);
-    setFilteredBooks(booksForYear);
+    const booksFiltered = bookData.filter((book) => book.Año === selectedYearNumber);
+    setBooksFiltered(booksFiltered);
   };
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex flex-col items-center justify-center">
       {bookData && (
         <select
           className="select-text text-black bg-white rounded-lg px-4 py-2 border border-black focus:outline-none"
@@ -47,13 +47,14 @@ const FilterBar = () => {
           onChange={handleSelectChange}
         >
           <option value="">Seleccione un año</option>
-          {filteredBooks.map((year) => (
-            <option key={year} value={year}>
+          {filteredBooks.map((year, index) => (
+            <option key={index} value={year}>
               {year}
             </option>
           ))}
         </select>
       )}
+      <BooksList booksFiltered={booksFiltered} selectValue={selectValue} />
     </div>
   );
 };
