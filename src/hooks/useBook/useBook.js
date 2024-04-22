@@ -13,14 +13,14 @@ export const useBook = () => {
       });
 
       if (response.status !== 200) {
-        throw new Error("Imposible mostrar los libros");
+        throw new Error("Books not found");
       }
 
       const slicedBooks = response.data.book.slice(0, 110);
 
       return slicedBooks;
     } catch (error) {
-      throw new Error("Error al obtener los datos del libro: " + error.message);
+      throw new Error("Error fetching books: " + error.message);
     }
   }, [apiKey, appEndpoint]);
 

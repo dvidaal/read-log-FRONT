@@ -4,7 +4,7 @@ const BooksList = ({ booksFiltered }) => {
   return (
     <div>
       {booksFiltered && (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4 p-4">
           {booksFiltered.map((book, index) => (
             <div key={index} className="text-black border border-gray-300 p-4">
               <p className="font-bold">{book.Nº}</p>

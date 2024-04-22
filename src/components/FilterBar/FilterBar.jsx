@@ -8,7 +8,7 @@ const FilterBar = () => {
   const [selectValue, setSelectValue] = useState("");
   const [filteredBooks, setFilteredBooks] = useState([]);
   const [booksFiltered, setBooksFiltered] = useState([]);
-
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -28,7 +28,7 @@ const FilterBar = () => {
       setBookData(null);
     };
   }, [getBook]);
-
+  
 
   const handleSelectChange = (event) => {
     const selectedYear = event.target.value;
@@ -46,7 +46,7 @@ const FilterBar = () => {
           value={selectValue}
           onChange={handleSelectChange}
         >
-          <option value="">Seleccione un año</option>
+          <option value="">Reading year</option>
           {filteredBooks.map((year, index) => (
             <option key={index} value={year}>
               {year}
