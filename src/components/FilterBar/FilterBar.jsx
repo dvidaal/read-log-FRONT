@@ -8,7 +8,7 @@ const FilterBar = () => {
   const [selectValue, setSelectValue] = useState("");
   const [filteredBooks, setFilteredBooks] = useState([]);
   const [booksFiltered, setBooksFiltered] = useState([]);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -20,7 +20,6 @@ const FilterBar = () => {
         }
       } catch (error) {
         console.error("Error fetching book data:", error);
-        setError("Error fetching book data");
       }
     };
     fetchData();
@@ -28,18 +27,19 @@ const FilterBar = () => {
       setBookData(null);
     };
   }, [getBook]);
-  
 
   const handleSelectChange = (event) => {
     const selectedYear = event.target.value;
     const selectedYearNumber = parseInt(selectedYear);
     setSelectValue(selectedYear);
-    const booksFiltered = bookData.filter((book) => book.Año === selectedYearNumber);
+    const booksFiltered = bookData.filter(
+      (book) => book.Año === selectedYearNumber
+    );
     setBooksFiltered(booksFiltered);
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center mt-8">
       {bookData && (
         <select
           className="select-text text-black bg-white rounded-lg px-4 py-2 border border-black focus:outline-none"
