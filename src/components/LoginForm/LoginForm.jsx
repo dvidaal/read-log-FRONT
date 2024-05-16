@@ -15,7 +15,7 @@ const LoginForm = () => {
 
       const token = JSON.stringify(userData.token);
       localStorage.setItem("token_read-log", token);
-      //window.location.href = "/";
+      window.location.href = "/";
     } catch (error) {
       setError("Invalid credentials");
     }
@@ -32,7 +32,7 @@ const LoginForm = () => {
             Username
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-white-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline bg-white"
             id="username"
             type="text"
             placeholder="Username"
@@ -48,7 +48,7 @@ const LoginForm = () => {
             Password
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-white-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline bg-white"
             id="password"
             type="password"
             placeholder="Password"
