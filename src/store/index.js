@@ -1,12 +1,10 @@
-/* import { configureStore } from "@reduxjs/toolkit";
-import yearsReducer from "./features/year/yearSlice";
+import { configureStore } from "@reduxjs/toolkit";
+import { userReducer } from "./user/userSlice";
 
 const store = configureStore({
   reducer: {
-    years: yearsReducer,
+    user: userReducer,
   },
 });
 
-export default store; */
-
-export {};
+export default store;

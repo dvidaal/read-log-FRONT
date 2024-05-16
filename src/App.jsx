@@ -1,19 +1,31 @@
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import "./App.css";
 import "./styles/styles.css";
-import Header from "./components/Header/Header";
-import FilterBar from "./components/FilterBar/FilterBar";
-import BooksList from "./components/BooksList/BooksList";
-import LoginForm from "./components/LoginForm/LoginForm";
+import LoginPage from "./pages/LoginPage/LoginPage.jsx";
+import HomePage from "./pages/HomePage/HomePage.jsx";
 
-function App() {
+const App = () => {
+  const token = localStorage.getItem("token_read-log");
+
   return (
-    <>
-      <Header />
-      <LoginForm />
-      <FilterBar />
-      <BooksList />
-    </>
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={token ? <HomePage /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/login"
+          element={token ? <LoginPage /> : <Navigate to="/login" />}
+        />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
