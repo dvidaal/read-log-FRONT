@@ -1,11 +1,13 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useUser from "../../hooks/useUser/useUser";
 
-const LoginForm = () => {
+const LoginForm = ({ setToken }) => {
     const { loginUser } = useUser();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const navigate = useNavigate(); // Inicializa el hook useNavigate
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -13,6 +15,15 @@ const LoginForm = () => {
         try {
             const userData = await loginUser(username, password);
             console.log("USER INFO ", userData);
+
+            if (userData && userData.token) {
+                // Guarda el token y redirige
+                setToken({ token: userData.token });
+                navigate("/"); // Redirige a la página de inicio
+            } else {
+                setError("Authentication failed. No token received.");
+            }
+
         } catch (error) {
             setError("Invalid credentials");
         }
@@ -57,6 +68,6 @@ const LoginForm = () => {
             </form>
         </div>
     );
-}
+};
 
 export default LoginForm;
