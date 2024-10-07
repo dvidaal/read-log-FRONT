@@ -1,15 +1,24 @@
-import { BrowserRouter } from "react-router-dom";
-import Layout from "./components/Layout/Layout";
-import "./styles/styles.css";
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import React from 'react';
+import './App.css';
+import './styles/styles.css';
+import LoginPage from './pages/LoginPage/LoginPage.jsx';
+import HomePage from './pages/HomePage/HomePage.jsx';
+import useToken from './hooks/useToken/useToken.js';
 
 const App = () => {
-  return (
-    <>
-      <BrowserRouter>
-        <Layout />
-      </BrowserRouter>
-    </>
-  );
+    const { token, setToken, removeToken } = useToken();
+    
+   console.log("TOKEN ", token)
+
+    return (
+        <Router>
+            <Routes>
+            <Route path="/login" element={<LoginPage setToken={setToken} />} />
+                <Route path="/" element={token ? <HomePage /> : <Navigate to="/login" />} />
+            </Routes>
+        </Router>
+    );
 };
 
 export default App;
