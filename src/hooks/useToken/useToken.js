@@ -38,7 +38,7 @@ const useToken = () => {
     const getToken = () => {
         const tokenString = localStorage.getItem("token");
         console.log("tokenString:", tokenString); 
-        if (!tokenString) return null; // Si no hay token, retorna null
+        if (!tokenString) return null; 
         const userToken = JSON.parse(tokenString);
         console.log("userToken:", userToken); 
         return userToken?.token;
@@ -49,7 +49,7 @@ const useToken = () => {
     const saveToken = (userToken) => {
         if (userToken && userToken.token) {
             localStorage.setItem("token", JSON.stringify(userToken));
-            setToken(userToken.token); // Asegúrate de pasar solo el valor del token
+            setToken(userToken.token); 
         } else {
             console.error("El formato de userToken no es válido");
         }
@@ -68,3 +68,4 @@ const useToken = () => {
 };
 
 export default useToken;
+
