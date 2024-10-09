@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useBook } from "../../hooks/useBook/useBook";
 import BooksList from "../BooksList/BooksList";
+import Header from "../Header/Header";
+import CreateForm from "../CreateForm/CreateForm";
 
 const FilterBar = () => {
   const { getBook } = useBook();
@@ -39,23 +41,29 @@ const FilterBar = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center mt-8">
-      {bookData && (
-        <select
-          className="select-text text-black bg-white rounded-lg px-4 py-2 border border-black focus:outline-none"
-          value={selectValue}
-          onChange={handleSelectChange}
-        >
-          <option value="">Reading year</option>
-          {filteredBooks.map((year, index) => (
-            <option key={index} value={year}>
-              {year}
-            </option>
-          ))}
-        </select>
-      )}
-      <BooksList booksFiltered={booksFiltered} selectValue={selectValue} />
-    </div>
+    <>
+      <Header />
+      <div className="flex items-center justify-center mt-4">
+        <CreateForm />
+      </div>
+      <div className="flex flex-col items-center justify-center mt-4">
+        {bookData && (
+          <select
+            className="select-text text-black bg-white rounded-lg px-4 py-2 border border-black focus:outline-none"
+            value={selectValue}
+            onChange={handleSelectChange}
+          >
+            <option value="">Reading year</option>
+            {filteredBooks.map((year, index) => (
+              <option key={index} value={year}>
+                {year}
+              </option>
+            ))}
+          </select>
+        )}
+        <BooksList booksFiltered={booksFiltered} selectValue={selectValue} />
+      </div>
+    </>
   );
 };
 
