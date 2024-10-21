@@ -51,8 +51,8 @@ const FilterBar = () => {
 
   return (
     <>
-      <div className="flex flex-start flex-row justify-between">
-        <h2 className="text-black text-4xl font-bold">My Reading List</h2>
+      <div className="flex flex-start flex-col items-start">
+        <h2 className="mb-4 text-black text-4xl font-bold">My Reading List</h2>
         <CreateForm />
       </div>
       <div className="flex flex-col items-start">
