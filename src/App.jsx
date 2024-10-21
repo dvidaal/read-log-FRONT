@@ -1,4 +1,4 @@
-import {
+/* import {
   BrowserRouter as Router,
   Routes,
   Route,
@@ -13,6 +13,8 @@ import useToken from "./hooks/useToken/useToken.js";
 const App = () => {
   const { token, setToken } = useToken();
 
+  console.log("TOKEN ", token);
+
   return (
     <Router>
       <Routes>
@@ -22,6 +24,28 @@ const App = () => {
           element={token ? <HomePage /> : <Navigate to="/login" />}
         />
       </Routes>
+    </Router>
+  );
+};
+
+export default App;
+ */
+
+// App.js
+import { BrowserRouter as Router } from "react-router-dom";
+import "./App.css";
+import "./styles/styles.css";
+import useToken from "./hooks/useToken/useToken";
+import AppRoutes from "./routers/routes";
+
+const App = () => {
+  const { token, setToken } = useToken();
+
+  console.log("TOKEN ", token);
+
+  return (
+    <Router>
+      <AppRoutes setToken={setToken} />
     </Router>
   );
 };
