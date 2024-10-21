@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useBook } from "../../hooks/useBook/useBook";
 import BooksList from "../BooksList/BooksList";
+import CreateForm from "../CreateForm/CreateForm";
 
 const FilterBar = () => {
   const { getBook } = useBook();
@@ -16,7 +17,17 @@ const FilterBar = () => {
         if (response) {
           setBookData(response);
           const uniqueYears = [...new Set(response.map((book) => book.Año))];
-          setFilteredBooks(uniqueYears);
+          const sortedYears = uniqueYears.sort((a, b) => b - a);
+          setFilteredBooks(sortedYears);
+
+          if (sortedYears.length > 0) {
+            const latestYear = sortedYears[0];
+            setSelectValue(latestYear);
+            const booksForLatestYear = response.filter(
+              (book) => book.Año === latestYear
+            );
+            setBooksFiltered(booksForLatestYear);
+          }
         }
       } catch (error) {
         console.error("Error fetching book data:", error);
@@ -39,23 +50,29 @@ const FilterBar = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center mt-8">
-      {bookData && (
-        <select
-          className="select-text text-black bg-white rounded-lg px-4 py-2 border border-black focus:outline-none"
-          value={selectValue}
-          onChange={handleSelectChange}
-        >
-          <option value="">Reading year</option>
-          {filteredBooks.map((year, index) => (
-            <option key={index} value={year}>
-              {year}
-            </option>
-          ))}
-        </select>
-      )}
-      <BooksList booksFiltered={booksFiltered} selectValue={selectValue} />
-    </div>
+    <>
+      <div className="flex flex-start flex-row justify-between">
+        <h2 className="text-black text-4xl font-bold">My Reading List</h2>
+        <CreateForm />
+      </div>
+      <div className="flex flex-col items-start">
+        {bookData && (
+          <select
+            className="mb-4 select-text text-black bg-white rounded-lg px-4 py-2 border border-black focus:outline-none"
+            value={selectValue}
+            onChange={handleSelectChange}
+          >
+            <option value="">Reading year</option>
+            {filteredBooks.map((year, index) => (
+              <option key={index} value={year}>
+                {year}
+              </option>
+            ))}
+          </select>
+        )}
+        <BooksList booksFiltered={booksFiltered} selectValue={selectValue} />
+      </div>
+    </>
   );
 };
 
