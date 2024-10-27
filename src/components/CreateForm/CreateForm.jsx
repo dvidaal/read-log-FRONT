@@ -21,13 +21,21 @@ const CreateForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const adjustedFormData = {
+      Año: formData.year,
+      Título: formData.title,
+      Autora: formData.author,
+      Tipo: formData.style,
+      Puntuación: formData.rating,
+    };
     try {
-      const response = await fetch("/api/books", {
+      //const response = await fetch("/api/books", {
+      const response = await fetch("http://localhost:3003/api/books", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(adjustedFormData),
       });
 
       if (response.ok) {
