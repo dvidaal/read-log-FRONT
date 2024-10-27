@@ -10,9 +10,9 @@ const BooksList = ({ booksFiltered }) => {
               key={index}
               className="bg-white border border-gray-300 rounded-lg shadow-md p-4 flex flex-col items-center"
             >
-              <div className="w-full h-48 bg-gray-200 rounded-md mb-4 flex items-center justify-center">
+              {/* <div className="w-full h-48 bg-gray-200 rounded-md mb-4 flex items-center justify-center">
                 <p className="text-gray-400">No Image</p>
-              </div>
+              </div> */}
               <div className="text-center">
                 <p className="font-bold text-lg mb-2 text-black">
                   {book.Título}

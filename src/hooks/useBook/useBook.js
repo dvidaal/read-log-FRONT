@@ -2,7 +2,7 @@ import axios from "axios";
 import { useCallback } from "react";
 
 export const useBook = () => {
-  const appEndpoint = "/read-log";
+  const appEndpoint = "/api/books";
   //const apiKey = process.env.API;
   //const apiKey = "https://read-log-back.onrender.com";
   const apiKey = "https://read-log-back-production.up.railway.app";
