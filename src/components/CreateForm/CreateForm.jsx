@@ -53,7 +53,7 @@ const CreateForm = () => {
     <div className="flex flex-col items-center justify-center">
       <button
         onClick={() => setAddBook(!addBook)}
-        className="bg-blue-500 text-white px-4 py-2 rounded mb-4"
+        className="bg-black-500 text-white px-4 py-2 rounded-lg"
       >
         {addBook ? "Hide Form" : "+ Add Book"}
       </button>
