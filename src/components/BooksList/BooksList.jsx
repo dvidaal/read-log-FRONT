@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-//import CreateForm from "../CreateForm/CreateForm";
 
 const BooksList = ({ booksFiltered }) => {
   return (

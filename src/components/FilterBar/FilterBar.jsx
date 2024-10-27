@@ -51,14 +51,17 @@ const FilterBar = () => {
 
   return (
     <>
-      <div className="flex flex-start flex-col items-start">
-        <h2 className="mb-4 text-black text-4xl font-bold">My Reading List</h2>
+      <div className="flex flex-col md:flex-row justify-between items-center w-full mb-4">
+        <h2 className="text-black text-4xl font-bold mb-4 md:mb-0">
+          My Reading List
+        </h2>
         <CreateForm />
       </div>
-      <div className="flex flex-col items-start">
+
+      <div className="flex flex-col items-center md:items-start">
         {bookData && (
           <select
-            className="mb-4 select-text text-black bg-white rounded-lg px-4 py-2 border border-black focus:outline-none"
+            className="mb-4 select-text text-black bg-white rounded-lg px-4 py-2 border border-black focus:outline-none mx-auto md:mx-0"
             value={selectValue}
             onChange={handleSelectChange}
           >
