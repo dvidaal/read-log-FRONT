@@ -6,11 +6,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { Toaster } from "@/components/ui/toaster"
+import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 
 const CreateForm = () => {
   const [addBook, setAddBook] = useState(false);
-
+  const { toast } = useToast()
   const [formData, setFormData] = useState({
     year: "",
     title: "",
@@ -51,7 +53,9 @@ const CreateForm = () => {
       );
 
       if (response.ok) {
-        alert("Book added successfully!");
+        toast({
+          title: "Book added successfully! :)",
+        })
         setFormData({
           year: "",
           title: "",
@@ -61,7 +65,10 @@ const CreateForm = () => {
         });
         setAddBook(false);
       } else {
-        alert("Failed to add book.");
+        toast({
+          variant: "destructive",
+          title: "Failed to add book. Try again :(",
+        })
       }
     } catch (error) {
       console.error("Error:", error);
@@ -179,6 +186,7 @@ const CreateForm = () => {
           </SheetHeader>
         </SheetContent>
       </Sheet>
+      <Toaster />
     </div>
   );
 };
