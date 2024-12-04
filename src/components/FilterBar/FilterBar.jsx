@@ -11,29 +11,30 @@ const FilterBar = () => {
   const [filteredBooks, setFilteredBooks] = useState([]);
   const [booksFiltered, setBooksFiltered] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getBook();
-        if (response) {
-          setBookData(response);
-          const uniqueYears = [...new Set(response.map((book) => book.Año))];
-          const sortedYears = uniqueYears.sort((a, b) => b - a);
-          setFilteredBooks(sortedYears);
+  const fetchData = async () => {
+    try {
+      const response = await getBook();
+      if (response) {
+        setBookData(response);
+        const uniqueYears = [...new Set(response.map((book) => book.Año))];
+        const sortedYears = uniqueYears.sort((a, b) => b - a);
+        setFilteredBooks(sortedYears);
 
-          if (sortedYears.length > 0) {
-            const latestYear = sortedYears[0];
-            setSelectValue(latestYear);
-            const booksForLatestYear = response.filter(
-              (book) => book.Año === latestYear
-            );
-            setBooksFiltered(booksForLatestYear);
-          }
+        if (sortedYears.length > 0) {
+          const latestYear = sortedYears[0];
+          setSelectValue(latestYear);
+          const booksForLatestYear = response.filter(
+            (book) => book.Año === latestYear
+          );
+          setBooksFiltered(booksForLatestYear);
         }
-      } catch (error) {
-        console.error("Error fetching book data:", error);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching book data:", error);
+    }
+  };
+
+  useEffect(() => {
     fetchData();
     return () => {
       setBookData(null);
@@ -53,21 +54,24 @@ const FilterBar = () => {
   const handleBookDeleted = async (deletedBookId) => {
     try {
       await deleteBook(deletedBookId);
-
       setBookData((prevBooks) => prevBooks.filter((book) => book.id !== deletedBookId));
       setBooksFiltered((prevBooks) => prevBooks.filter((book) => book.id !== deletedBookId));
 
       toast({
         variant: "success",
         title: "Book deleted successfully!"
-      })
+      });
     } catch (error) {
       toast({
         variant: "destructive",
         title: "Failed to delete book. Try again :("
-      })
+      });
       console.error("Error eliminando el libro:", error.message);
     }
+  };
+
+  const handleBookCreated = () => {
+    fetchData();
   };
 
   return (
@@ -76,7 +80,7 @@ const FilterBar = () => {
         <h2 className="text-black text-4xl font-bold mb-4 md:mb-0">
           My Reading List
         </h2>
-        <CreateForm />
+        <CreateForm onBookCreated={handleBookCreated} />
       </div>
 
       <div className="flex flex-col items-center md:items-start">
