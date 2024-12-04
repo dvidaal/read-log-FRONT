@@ -55,6 +55,7 @@ const CreateForm = () => {
 
       if (response.ok) {
         toast({
+          variant: "success",
           title: "Book added successfully! :)",
         })
         setFormData({
