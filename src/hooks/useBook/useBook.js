@@ -2,10 +2,10 @@ import axios from "axios";
 import { useCallback } from "react";
 
 export const useBook = () => {
+  const apiKey = "https://read-log-back-production.up.railway.app";
   const appEndpoint = "/api/books";
   //const apiKey = process.env.API;
   //const apiKey = "https://read-log-back.onrender.com";
-  const apiKey = "https://read-log-back-production.up.railway.app";
 
   const getBook = useCallback(async () => {
     try {
@@ -25,26 +25,48 @@ export const useBook = () => {
     }
   }, [apiKey, appEndpoint]);
 
-  const deleteBook = useCallback(async (id) => {
+  const createBook = useCallback(async (newBook) => {
     try {
-      if (!id) {
-        throw new Error("Book ID is required");
-      }
-
-      const response = await axios.delete(`${apiKey}${appEndpoint}/${id}`, {
-        headers: { "Content-Type": "application/json" },
+      const response = await axios.post(`${apiKey}${appEndpoint}`, newBook, {
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
 
-      if (response.status !== 200) {
-        throw new Error("Error deleting the book: " + response.statusText);
+      if (response.status !== 201) {
+        throw new Error("Failed to add book");
       }
 
-      console.log("Book deleted successfully:", response.data);
-      return response.data;
+      return response.data; 
     } catch (error) {
-      throw new Error("Error deleting the book: " + error.message);
+      throw new Error("Error adding the book: " + error.message);
     }
   }, [apiKey, appEndpoint]);
 
-  return { getBook, deleteBook };
+
+  const deleteBook = useCallback(
+    async (id) => {
+      try {
+        if (!id) {
+          throw new Error("Book ID is required");
+        }
+
+        const response = await axios.delete(`${apiKey}${appEndpoint}/${id}`, {
+          headers: { "Content-Type": "application/json" },
+        });
+
+        if (response.status !== 200) {
+          throw new Error("Error deleting the book: " + response.statusText);
+        }
+
+        console.log("Book deleted successfully:", response.data);
+        return response.data;
+      } catch (error) {
+        throw new Error("Error deleting the book: " + error.message);
+      }
+    },
+    [apiKey, appEndpoint]
+  );
+
+  return { getBook, deleteBook, createBook };
 };

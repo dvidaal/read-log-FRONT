@@ -6,15 +6,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from "@/components/ui/toaster";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
-import { useBook } from "@/hooks/useBook/useBook"
+import { useBook } from "@/hooks/useBook/useBook";
 
-const CreateForm = () => {
-  const [addBook, setAddBook] = useState(false);
-  const { toast } = useToast()
-  const { getBook } = useBook()
+const CreateForm = ({ onBookCreated }) => {
+  const { toast } = useToast();
+  const { createBook } = useBook(); 
   const [formData, setFormData] = useState({
     year: "",
     title: "",
@@ -40,47 +39,39 @@ const CreateForm = () => {
       Tipo: formData.style,
       Puntuación: formData.rating,
     };
-    try {
-      //const response = await fetch("http://localhost:3003/api/books", {
-      const response = await fetch(
-       "https://read-log-back-production.up.railway.app/api/books",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(adjustedFormData),
-        }
-      );
 
-      if (response.ok) {
-        toast({
-          variant: "success",
-          title: "Book added successfully! :)",
-        })
-        setFormData({
-          year: "",
-          title: "",
-          author: "",
-          style: "",
-          rating: "",
-        });
-        setAddBook(false);
-      } else {
-        toast({
-          variant: "destructive",
-          title: "Failed to add book. Try again :(",
-        })
+    try {
+      await createBook(adjustedFormData);
+
+      toast({
+        variant: "success",
+        title: "Book added successfully! :)",
+      });
+
+      setFormData({
+        year: "",
+        title: "",
+        author: "",
+        style: "",
+        rating: "",
+      });
+
+      if (onBookCreated) {
+        onBookCreated();
       }
     } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Failed to add book. Try again :(",
+      });
       console.error("Error:", error);
-      alert("An error occurred while adding the book.");
     }
   };
 
+
   return (
     <div className="flex flex-col items-center justify-center">
-       <Sheet>
+      <Sheet>
         <SheetTrigger className="bg-black-500 text-white px-4 py-2 rounded-lg">
           + Add Book
         </SheetTrigger>
@@ -113,7 +104,6 @@ const CreateForm = () => {
                     })}
                   </select>
                 </label>
-
                 <label className="flex flex-col">
                   <span className="font-semibold">Title</span>
                   <input
@@ -166,7 +156,6 @@ const CreateForm = () => {
                     ))}
                   </select>
                 </label>
-
                 <button
                   type="submit"
                   className="bg-transparent border-none p-0 focus:outline-none mt-4 flex justify-center"
