@@ -5,7 +5,7 @@ import CreateForm from "../CreateForm/CreateForm";
 import { toast } from "@/hooks/use-toast";
 
 const FilterBar = () => {
-  const { getBook, deleteBook } = useBook();
+  const { getBook, deleteBook, editBook } = useBook();
   const [bookData, setBookData] = useState(null);
   const [selectValue, setSelectValue] = useState("");
   const [filteredBooks, setFilteredBooks] = useState([]);
@@ -74,6 +74,11 @@ const FilterBar = () => {
     fetchData();
   };
 
+  const handleEditSubmit = async () => {
+    await fetchData();
+  };
+
+
   return (
     <>
       <div className="flex flex-col md:flex-row justify-between items-center w-full mb-4">
@@ -98,7 +103,7 @@ const FilterBar = () => {
             ))}
           </select>
         )}
-        <BooksList booksFiltered={booksFiltered} selectValue={selectValue} onBookDeleted={handleBookDeleted} />
+        <BooksList booksFiltered={booksFiltered} selectValue={selectValue} onBookDeleted={handleBookDeleted} onBookEdited={handleEditSubmit}/>
       </div>
     </>
   );

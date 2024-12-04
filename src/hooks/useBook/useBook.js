@@ -59,7 +59,6 @@ export const useBook = () => {
           throw new Error("Error deleting the book: " + response.statusText);
         }
 
-        console.log("Book deleted successfully:", response.data);
         return response.data;
       } catch (error) {
         throw new Error("Error deleting the book: " + error.message);
@@ -68,5 +67,31 @@ export const useBook = () => {
     [apiKey, appEndpoint]
   );
 
-  return { getBook, deleteBook, createBook };
+  const editBook = useCallback(async (id, updatedData) => {
+    try {
+      if (!id) {
+        throw new Error("Book ID is required");
+      }
+
+      const response = await axios.put(
+        `${apiKey}${appEndpoint}/${id}`,
+        updatedData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status !== 200) {
+        throw new Error("Error editing the book: " + response.statusText);
+      }
+
+      return response.data.editedBook; 
+    } catch (error) {
+      throw new Error("Error editing the book: " + error.message);
+    }
+  }, [apiKey, appEndpoint]);
+
+  return { getBook, deleteBook, createBook, editBook };
 };
