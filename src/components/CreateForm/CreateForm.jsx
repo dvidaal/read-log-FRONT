@@ -9,10 +9,12 @@ import {
 import { Toaster } from "@/components/ui/toaster"
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
+import { useBook } from "@/hooks/useBook/useBook"
 
 const CreateForm = () => {
   const [addBook, setAddBook] = useState(false);
   const { toast } = useToast()
+  const { getBook } = useBook()
   const [formData, setFormData] = useState({
     year: "",
     title: "",
@@ -39,10 +41,9 @@ const CreateForm = () => {
       Puntuación: formData.rating,
     };
     try {
-      //const response = await fetch("/api/books", {
       //const response = await fetch("http://localhost:3003/api/books", {
       const response = await fetch(
-        "https://read-log-back-production.up.railway.app/api/books",
+       "https://read-log-back-production.up.railway.app/api/books",
         {
           method: "POST",
           headers: {
