@@ -72,7 +72,7 @@ const CreateForm = ({ onBookCreated }) => {
   return (
     <div className="flex flex-col items-center justify-center">
       <Sheet>
-        <SheetTrigger className="bg-black-500 text-white px-4 py-2 rounded-lg">
+        <SheetTrigger className="btn-global bg-black-500 text-white px-4 py-2 rounded-lg">
           + Add Book
         </SheetTrigger>
         <SheetContent className="p-4 md:p-6 flex flex-col h-[100vh]">
@@ -149,7 +149,7 @@ const CreateForm = ({ onBookCreated }) => {
                     className="bg-gray-100 border rounded-lg p-2 mt-1"
                   >
                     <option value="">Select a rating</option>
-                    {[1, 2, 3, 4, 5].map((rate) => (
+                    {[1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5].map((rate) => (
                       <option key={rate} value={rate}>
                         {rate}
                       </option>
