@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useBook } from "../../hooks/useBook/useBook";
 import BooksList from "../BooksList/BooksList";
 import CreateForm from "../CreateForm/CreateForm";
+import { toast } from "@/hooks/use-toast";
 
 const FilterBar = () => {
   const { getBook, deleteBook } = useBook();
@@ -56,8 +57,15 @@ const FilterBar = () => {
       setBookData((prevBooks) => prevBooks.filter((book) => book.id !== deletedBookId));
       setBooksFiltered((prevBooks) => prevBooks.filter((book) => book.id !== deletedBookId));
 
-      console.log(`Libro con ID ${deletedBookId} eliminado correctamente.`);
+      toast({
+        variant: "success",
+        title: "Book deleted successfully!"
+      })
     } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Failed to delete book. Try again :("
+      })
       console.error("Error eliminando el libro:", error.message);
     }
   };
