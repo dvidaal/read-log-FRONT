@@ -4,7 +4,7 @@ import BooksList from "../BooksList/BooksList";
 import CreateForm from "../CreateForm/CreateForm";
 
 const FilterBar = () => {
-  const { getBook } = useBook();
+  const { getBook, deleteBook } = useBook();
   const [bookData, setBookData] = useState(null);
   const [selectValue, setSelectValue] = useState("");
   const [filteredBooks, setFilteredBooks] = useState([]);
@@ -49,6 +49,19 @@ const FilterBar = () => {
     setBooksFiltered(booksFiltered);
   };
 
+  const handleBookDeleted = async (deletedBookId) => {
+    try {
+      await deleteBook(deletedBookId);
+
+      setBookData((prevBooks) => prevBooks.filter((book) => book.id !== deletedBookId));
+      setBooksFiltered((prevBooks) => prevBooks.filter((book) => book.id !== deletedBookId));
+
+      console.log(`Libro con ID ${deletedBookId} eliminado correctamente.`);
+    } catch (error) {
+      console.error("Error eliminando el libro:", error.message);
+    }
+  };
+
   return (
     <>
       <div className="flex flex-col md:flex-row justify-between items-center w-full mb-4">
@@ -73,7 +86,7 @@ const FilterBar = () => {
             ))}
           </select>
         )}
-        <BooksList booksFiltered={booksFiltered} selectValue={selectValue} />
+        <BooksList booksFiltered={booksFiltered} selectValue={selectValue} onBookDeleted={handleBookDeleted} />
       </div>
     </>
   );

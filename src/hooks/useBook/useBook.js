@@ -25,5 +25,26 @@ export const useBook = () => {
     }
   }, [apiKey, appEndpoint]);
 
-  return { getBook };
+  const deleteBook = useCallback(async (id) => {
+    try {
+      if (!id) {
+        throw new Error("Book ID is required");
+      }
+
+      const response = await axios.delete(`${apiKey}${appEndpoint}/${id}`, {
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (response.status !== 200) {
+        throw new Error("Error deleting the book: " + response.statusText);
+      }
+
+      console.log("Book deleted successfully:", response.data);
+      return response.data;
+    } catch (error) {
+      throw new Error("Error deleting the book: " + error.message);
+    }
+  }, [apiKey, appEndpoint]);
+
+  return { getBook, deleteBook };
 };
