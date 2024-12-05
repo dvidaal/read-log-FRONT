@@ -84,7 +84,10 @@ const BooksList = ({ booksFiltered, onBookDeleted, onBookEdited }) => {
               </div>
               <div className="flex flex-row gap-2 mt-4">
                 <EditBookDrawer book={book} onBookEdited={onBookEdited} />
-                <Button text="Delete" onClick={() => handleDeleteBook(book.id)} />
+                <Button
+                  text="Delete"
+                  onClick={() => handleDeleteBook(book.id)}
+                />
               </div>
             </div>
           ))}

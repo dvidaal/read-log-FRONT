@@ -8,12 +8,13 @@ import {
 } from "@/components/ui/sheet";
 import { Toaster } from "@/components/ui/toaster";
 import { useToast } from "@/hooks/use-toast";
+import PropTypes from "prop-types";
 import { useState } from "react";
 import { useBook } from "@/hooks/useBook/useBook";
 
 const CreateForm = ({ onBookCreated }) => {
   const { toast } = useToast();
-  const { createBook } = useBook(); 
+  const { createBook } = useBook();
   const [formData, setFormData] = useState({
     year: "",
     title: "",
@@ -67,7 +68,6 @@ const CreateForm = ({ onBookCreated }) => {
       console.error("Error:", error);
     }
   };
-
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -180,6 +180,10 @@ const CreateForm = ({ onBookCreated }) => {
       <Toaster />
     </div>
   );
+};
+
+CreateForm.propTypes = {
+  onBookCreated: PropTypes.func,
 };
 
 export default CreateForm;

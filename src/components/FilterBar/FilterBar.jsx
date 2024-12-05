@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useBook } from "../../hooks/useBook/useBook";
 import BooksList from "../BooksList/BooksList";
 import CreateForm from "../CreateForm/CreateForm";
 import { toast } from "@/hooks/use-toast";
 
 const FilterBar = () => {
-  const { getBook, deleteBook, editBook } = useBook();
+  const { getBook, deleteBook } = useBook();
   const [bookData, setBookData] = useState(null);
   const [selectValue, setSelectValue] = useState("");
   const [filteredBooks, setFilteredBooks] = useState([]);
   const [booksFiltered, setBooksFiltered] = useState([]);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const response = await getBook();
       if (response) {
@@ -32,14 +32,14 @@ const FilterBar = () => {
     } catch (error) {
       console.error("Error fetching book data:", error);
     }
-  };
+  }, [getBook]);
 
   useEffect(() => {
     fetchData();
     return () => {
       setBookData(null);
     };
-  }, [getBook]);
+  }, [fetchData]);
 
   const handleSelectChange = (event) => {
     const selectedYear = event.target.value;
@@ -54,17 +54,21 @@ const FilterBar = () => {
   const handleBookDeleted = async (deletedBookId) => {
     try {
       await deleteBook(deletedBookId);
-      setBookData((prevBooks) => prevBooks.filter((book) => book.id !== deletedBookId));
-      setBooksFiltered((prevBooks) => prevBooks.filter((book) => book.id !== deletedBookId));
+      setBookData((prevBooks) =>
+        prevBooks.filter((book) => book.id !== deletedBookId)
+      );
+      setBooksFiltered((prevBooks) =>
+        prevBooks.filter((book) => book.id !== deletedBookId)
+      );
 
       toast({
         variant: "success",
-        title: "Book deleted successfully!"
+        title: "Book deleted successfully!",
       });
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "Failed to delete book. Try again :("
+        title: "Failed to delete book. Try again :(",
       });
       console.error("Error eliminando el libro:", error.message);
     }
@@ -77,7 +81,6 @@ const FilterBar = () => {
   const handleEditSubmit = async () => {
     await fetchData();
   };
-
 
   return (
     <>
@@ -103,7 +106,12 @@ const FilterBar = () => {
             ))}
           </select>
         )}
-        <BooksList booksFiltered={booksFiltered} selectValue={selectValue} onBookDeleted={handleBookDeleted} onBookEdited={handleEditSubmit}/>
+        <BooksList
+          booksFiltered={booksFiltered}
+          selectValue={selectValue}
+          onBookDeleted={handleBookDeleted}
+          onBookEdited={handleEditSubmit}
+        />
       </div>
     </>
   );
