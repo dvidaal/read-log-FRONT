@@ -25,24 +25,26 @@ export const useBook = () => {
     }
   }, [apiKey, appEndpoint]);
 
-  const createBook = useCallback(async (newBook) => {
-    try {
-      const response = await axios.post(`${apiKey}${appEndpoint}`, newBook, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+  const createBook = useCallback(
+    async (newBook) => {
+      try {
+        const response = await axios.post(`${apiKey}${appEndpoint}`, newBook, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
-      if (response.status !== 201) {
-        throw new Error("Failed to add book");
+        if (response.status !== 201) {
+          throw new Error("Failed to add book");
+        }
+
+        return response.data;
+      } catch (error) {
+        throw new Error("Error adding the book: " + error.message);
       }
-
-      return response.data; 
-    } catch (error) {
-      throw new Error("Error adding the book: " + error.message);
-    }
-  }, [apiKey, appEndpoint]);
-
+    },
+    [apiKey, appEndpoint]
+  );
 
   const deleteBook = useCallback(
     async (id) => {
@@ -67,31 +69,34 @@ export const useBook = () => {
     [apiKey, appEndpoint]
   );
 
-  const editBook = useCallback(async (id, updatedData) => {
-    try {
-      if (!id) {
-        throw new Error("Book ID is required");
-      }
-
-      const response = await axios.put(
-        `${apiKey}${appEndpoint}/${id}`,
-        updatedData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
+  const editBook = useCallback(
+    async (id, updatedData) => {
+      try {
+        if (!id) {
+          throw new Error("Book ID is required");
         }
-      );
 
-      if (response.status !== 200) {
-        throw new Error("Error editing the book: " + response.statusText);
+        const response = await axios.put(
+          `${apiKey}${appEndpoint}/${id}`,
+          updatedData,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (response.status !== 200) {
+          throw new Error("Error editing the book: " + response.statusText);
+        }
+
+        return response.data.editedBook;
+      } catch (error) {
+        throw new Error("Error editing the book: " + error.message);
       }
-
-      return response.data.editedBook; 
-    } catch (error) {
-      throw new Error("Error editing the book: " + error.message);
-    }
-  }, [apiKey, appEndpoint]);
+    },
+    [apiKey, appEndpoint]
+  );
 
   return { getBook, deleteBook, createBook, editBook };
 };
