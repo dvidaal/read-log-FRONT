@@ -78,7 +78,7 @@ const BooksList = ({ booksFiltered, onBookDeleted, onBookEdited }) => {
                 </p>
                 <p className="text-gray-600">{book.Autora}</p>
                 <p className="text-gray-500 mb-2">{book.Tipo}</p>
-                <p className="text-yellow-500 flex items-center justify-center text-sm mt-2">
+                <p className="text-black font-extrabold flex items-center justify-center text-sm mt-2">
                   ⭐ {book.Puntuación}
                 </p>
               </div>
