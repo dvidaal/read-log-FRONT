@@ -46,8 +46,16 @@ const EditBookDrawer = ({ book, onBookEdited }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const adjustedFormData = {
+      Año: formData.year,
+      Título: formData.title,
+      Autora: formData.author,
+      Tipo: formData.style,
+      Puntuación: formData.rating,
+    };
+
     try {
-      await editBook(book.id, formData);
+      await editBook(book.id, adjustedFormData);
       toast({
         variant: "success",
         title: "Book updated successfully! :)",
